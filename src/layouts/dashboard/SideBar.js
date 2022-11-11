@@ -1,11 +1,19 @@
-import React from 'react';
-import { Avatar, Box, Divider, IconButton, Stack, Menu, MenuItem } from '@mui/material';
+import React from "react";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Gear } from 'phosphor-react';
-import { useState } from 'react';
-import AntSwitch from '../../components/AntSwitch';
-import { Nav_Buttons, Profile_Menu } from '../../data';
-import useSettings from '../../hooks/useSettings';
+import { Gear } from "phosphor-react";
+import { useState } from "react";
+import AntSwitch from "../../components/AntSwitch";
+import { Nav_Buttons, Profile_Menu } from "../../data";
+import useSettings from "../../hooks/useSettings";
 import { faker } from "@faker-js/faker";
 import Logo from "../../assets/Images/logo.png";
 
@@ -23,7 +31,6 @@ const SideBar = () => {
     setAnchorEl(null);
   };
 
-
   return (
     <Box
       p={2}
@@ -31,7 +38,7 @@ const SideBar = () => {
         backgroundColor: theme.palette.background.paper,
         boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
         height: "100vh",
-        width: 100
+        width: 100,
       }}
     >
       <Stack
@@ -41,20 +48,25 @@ const SideBar = () => {
         sx={{ height: "100%" }}
         spacing={3}
       >
-
         <Stack alignItems={"center"} spacing={4}>
-          <Box sx={{
-            backgroundColor: theme.palette.primary.main,
-            height: 64,
-            width: 64,
-            borderRadius: 1.5,
-          }}
+          <Box
+            sx={{
+              backgroundColor: theme.palette.primary.main,
+              height: 64,
+              width: 64,
+              borderRadius: 1.5,
+            }}
           >
             <img src={Logo} alt={"Chat App Logo"} />
           </Box>
-          <Stack sx={{ width: "max-content" }} direction="column" alignItems="center" spacing={3}>
-            {Nav_Buttons.map((el) => (
-              el.index === selected ?
+          <Stack
+            sx={{ width: "max-content" }}
+            direction="column"
+            alignItems="center"
+            spacing={3}
+          >
+            {Nav_Buttons.map((el) =>
+              el.index === selected ? (
                 <Box
                   p={1}
                   sx={{
@@ -69,18 +81,26 @@ const SideBar = () => {
                     {el.icon}
                   </IconButton>
                 </Box>
-                : <IconButton
+              ) : (
+                <IconButton
                   onClick={() => {
                     setSelected(el.index);
                   }}
-                  sx={{ width: "max-content", color: theme.palette.mode === "Light" ? "#000" : theme.palette.text.primary }}
+                  sx={{
+                    width: "max-content",
+                    color:
+                      theme.palette.mode === "Light"
+                        ? "#000"
+                        : theme.palette.text.primary,
+                  }}
                   key={el.index}
                 >
                   {el.icon}
                 </IconButton>
-            ))}
+              )
+            )}
             <Divider sx={{ width: "48px" }} />
-            {selected === 3 ?
+            {selected === 3 ? (
               <Box
                 p={1}
                 sx={{
@@ -91,27 +111,34 @@ const SideBar = () => {
                 <IconButton sx={{ width: "max-content", color: "#fff" }}>
                   <Gear />
                 </IconButton>
-
-
               </Box>
-
-              : <IconButton onClick={() => {
-                setSelected(3);
-              }}
-                sx={{ width: "max-content", color: theme.palette.mode === "Light" ? "#000" : theme.palette.text.primary }}
+            ) : (
+              <IconButton
+                onClick={() => {
+                  setSelected(3);
+                }}
+                sx={{
+                  width: "max-content",
+                  color:
+                    theme.palette.mode === "Light"
+                      ? "#000"
+                      : theme.palette.text.primary,
+                }}
               >
                 <Gear />
               </IconButton>
-            }
-
+            )}
           </Stack>
         </Stack>
 
         <Stack spacing={4}>
           {/* Switch */}
-          <AntSwitch onChange={() => {
-            onToggleMode();
-          }} defaultChecked />
+          <AntSwitch
+            onChange={() => {
+              onToggleMode();
+            }}
+            defaultChecked={theme.palette.mode === "dark"}
+          />
           <Avatar
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
@@ -119,7 +146,8 @@ const SideBar = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
             size={20}
-            src={faker.image.avatar()} />
+            src={faker.image.avatar()}
+          />
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -128,34 +156,36 @@ const SideBar = () => {
             MenuListProps={{
               "aria-labelledby": "basic-button",
             }}
-
-            anchorOrigin= {{
+            anchorOrigin={{
               vertical: "bottom",
               horizontal: "right",
             }}
-
-            transformOrigin= {{
+            transformOrigin={{
               vertical: "bottom",
               horizontal: "left",
             }}
           >
             <Stack spacing={1} px={1}>
               {Profile_Menu.map((el) => {
-                <MenuItem onClick={handleClick}>
-                  <Stack sx={{ width: 100 }} direction="row" alignItems={"center"} justifyContent="space-between">
+               return <MenuItem onClick={handleClick}>
+                  <Stack
+                    sx={{ width: 100 }}
+                    direction="row"
+                    alignItems={"center"}
+                    justifyContent="space-between"
+                  >
                     <span>{el.title}</span>
                     {el.icon}
-                  </Stack> {""}
-                </MenuItem>
+                  </Stack>{" "}
+                  {""}
+                </MenuItem>;
               })}
             </Stack>
-
           </Menu>
         </Stack>
       </Stack>
-
     </Box>
-  )
-}
+  );
+};
 
 export default SideBar;
